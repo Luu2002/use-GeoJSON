@@ -4,5 +4,5 @@ I want to share my life path through an interactive and visually appealing map o
 
 You will see the key moments in my life as you follow this map. Beginning with my birthplace and the town where I grew up, each site is labeled with its own coordinates, giving a concrete link between the events of my life and the actual world.
 
-* This page is under construction and will not include every detail of my life path.
+Warning! This page is under construction and will not include every detail of my life path.
 
