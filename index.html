@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Earthquake List</title>
+    <title>Life Journey</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
 
     <style>
+       html,
         body {
-            margin: 0;
+            margin: 5;
             padding: 0;
         }
 
@@ -48,18 +49,20 @@
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f7bee9;
         }
 
         @media (max-width: 1024px) {
-        #container {
-            flex-direction: column;
+            #side-panel {
+                display: none;
+            }
+
+            #map {
+                flex-grow: 1;
+                width: 100%;
+            }
         }
 
-        #side-panel {
-            display: none;
-        }
-    }
     </style>
 </head>
 
@@ -67,14 +70,13 @@
     <main id="container">
         <div id="side-panel">
 
-            <h2>Earthquake List</h2>
-            <button>Sort by Magnitude</button>
+            <h2>My Life Journey</h2>
+            <button>Sort by Year</button>
 
             <table>
                 <tr>
-                    <th>id</th>
-                    <th>magnitude</th>
-                    <th>timestamp</th>
+                    <th>Event</th>
+                    <th>Year</th>
                 </tr>
             </table>
 
@@ -86,71 +88,71 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoibHUyMDAyIiwiYSI6ImNsanVoaGh0ZjA0czQzbG5tZmE5aWtjcGIifQ.9VOrYf_jAUNJK-PSU76sOg';
 
         let map = new mapboxgl.Map({
-            container: 'map', 
-            style: 'mapbox://styles/mapbox/outdoors-v11',
-            zoom: 5.5,
-            center: [138, 38]
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            zoom: 1,
+            center: [0, 0]
         });
 
-
         async function geojsonFetch() {
+            let response, lifeJourney;
+            response = await fetch('assets/journey.geojson');
+            lifeJourney = await response.json();
 
-            let response, earthquakes, japan, table;
-            response = await fetch('assets/earthquakes.geojson');
-            earthquakes = await response.json();
-            response = await fetch('assets/japan.json');
-            japan = await response.json();
-
-            table = document.getElementsByTagName("table")[0];
-            let row, cell1, cell2, cell3;
-            for (let i = 0; i < earthquakes.features.length; i++) {
+            let table = document.getElementsByTagName("table")[0];
+            let row, cell1, cell2;
+            for (let i = 0; i < lifeJourney.features.length; i++) {
                 row = table.insertRow(-1);
                 cell1 = row.insertCell(0);
                 cell2 = row.insertCell(1);
-                cell3 = row.insertCell(2);
-                cell1.innerHTML = earthquakes.features[i].properties.id;
-                cell2.innerHTML = earthquakes.features[i].properties.mag;
-                cell3.innerHTML = new Date(earthquakes.features[i].properties.time).toLocaleDateString(
-                    "en-US");
+                cell1.innerHTML = lifeJourney.features[i].properties.event;
+                cell2.innerHTML = lifeJourney.features[i].properties.year;
             }
 
-            map.on('load', function loadingData() {
-
-                map.addSource('earthquakes', {
+            map.on('load', function () {
+                map.addSource('life-journey', {
                     type: 'geojson',
-                    data: earthquakes
+                    data: lifeJourney
                 });
 
                 map.addLayer({
-                    'id': 'earthquakes-layer',
+                    'id': 'life-journey-layer',
                     'type': 'circle',
-                    'source': 'earthquakes',
+                    'source': 'life-journey',
                     'paint': {
                         'circle-radius': 8,
                         'circle-stroke-width': 2,
-                        'circle-color': 'red',
+                        'circle-color': 'blue',
                         'circle-stroke-color': 'white'
                     }
                 });
 
-
-                map.addSource('japan', {
-                    type: 'geojson',
-                    data: japan
+                let bounds = new mapboxgl.LngLatBounds();
+                lifeJourney.features.forEach(function (feature) {
+                    bounds.extend(feature.geometry.coordinates);
                 });
 
-                map.addLayer({
-                    'id': 'japan-layer',
-                    'type': 'fill',
-                    'source': 'japan',
-                    'paint': {
-                        'fill-color': '#0080ff',
-                        'fill-opacity': 0.5
-                    }
+                map.fitBounds(bounds, {
+                    padding: 50
                 });
-
             });
 
+            map.on('mouseenter', 'life-journey-layer', function (e) {
+                map.getCanvas().style.cursor = 'pointer';
+
+                let coordinates = e.features[0].geometry.coordinates.slice();
+                let properties = e.features[0].properties;
+
+                let popup = new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(`<h3>${properties.event}</h3><p>Year: ${properties.year}</p>`)
+                    .addTo(map);
+
+                map.on('mouseleave', 'life-journey-layer', function () {
+                    map.getCanvas().style.cursor = '';
+                    popup.remove();
+                });
+            });
         }
 
         geojsonFetch();
@@ -163,15 +165,18 @@
             let table, rows, switching, i, x, y, shouldSwitch;
             table = document.getElementsByTagName("table")[0];
             switching = true;
+
             while (switching) {
                 switching = false;
                 rows = table.rows;
+
                 for (i = 1; i < (rows.length - 1); i++) {
                     shouldSwitch = false;
-                    x = parseFloat(rows[i].getElementsByTagName("td")[1].innerHTML);
-                    y = parseFloat(rows[i + 1].getElementsByTagName("td")[1].innerHTML);
-   
-                    if (x < y) {
+
+                    x = parseInt(rows[i].getElementsByTagName("td")[1].innerHTML);
+                    y = parseInt(rows[i + 1].getElementsByTagName("td")[1].innerHTML);
+
+                    if (x > y) {
                         shouldSwitch = true;
                         break;
                     }

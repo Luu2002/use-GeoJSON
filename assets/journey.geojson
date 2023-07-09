@@ -1,0 +1,184 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Born - CN",
+          "year": 2002
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            119.2965,
+            26.0745
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Grew up - U.S",
+          "year": 2008
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -122.3321,
+            47.6062
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - U.S",
+          "year": 2014,
+          "place": "New York"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.0060,
+            40.7128
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - U.S",
+          "year": 2022,
+          "place": "Hawaii"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -157.8583,
+            21.3069
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - U.S",
+          "year": 2023,
+          "place": "Las Vegas"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -115.1492,
+            36.1699
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - CN",
+          "year": 2012,
+          "place": "Beijing"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            116.4074,
+            39.9042
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - CN",
+          "year": 2018,
+          "place": "Guangzhou"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            113.2644,
+            23.1291
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - CN",
+          "year": 2018,
+          "place": "Taipei"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            121.5654,
+            25.0328
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - CA",
+          "year": 2015,
+          "place": "Vancouver"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -123.1216,
+            49.2827
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - CA",
+          "year": 2017,
+          "place": "Toronto"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -79.3832,
+            43.6532
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - TH",
+          "year": 2019,
+          "place": "Bangkok"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            100.5167,
+            13.7563
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "event": "Visited - JP",
+          "year": 2016,
+          "place": "Tokyo"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            139.6917,
+            35.6895
+          ]
+        }
+      }
+    ]
+  }
+  
